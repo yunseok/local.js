@@ -64,6 +64,30 @@ function World() {
 			text.position.y = 0;
 			text.position.z = -5;
 			text.scale.x = .025;
+
+
+			// debug
+			var gui = new dat.GUI();
+
+			var textPos = gui.addFolder('text-pos');
+			textPos.add(text.position, 'x', -200, 200).listen();
+			textPos.add(text.position, 'y', -200, 200).listen();
+			textPos.add(text.position, 'z', -200, 200).listen();
+
+			var textRot = gui.addFolder('text-rot');
+			textRot.add(text.rotation, 'x', -200, 200).listen();
+			textRot.add(text.rotation, 'y', -200, 200).listen();
+			textRot.add(text.rotation, 'z', -200, 200).listen();
+
+			var textScale = gui.addFolder('text-scale');
+			textScale.add(text.scale, 'x', -10, 10).listen();
+			textScale.add(text.scale, 'y', -10, 10).listen();
+			textScale.add(text.scale, 'z', -10, 10).listen();
+
+			textPos.open();
+			textRot.open();
+			textScale.open();
+
 			scene.add( text );
 		});
 
