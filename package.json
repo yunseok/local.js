@@ -1,0 +1,18 @@
+{
+  "name": "yunseokdev",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "browser-sync start --server --files ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/yunseok/websiteV2"
+  },
+  "author": "yunseok",
+  "license": "ISC",
+  "dependencies": {
+    "browser-sync": "^2.26.7"
+  }
+}
