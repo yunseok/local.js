@@ -60,10 +60,13 @@ function World() {
 			xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
 			geometry.translate( xMid, 0, 0 );
 			text = new THREE.Mesh( geometry, matLite );
-			text.position.x = -5;
-			text.position.y = 0;
+			text.position.x = 4.2;
+			text.position.y = 7.2;
 			text.position.z = -5;
-			text.scale.x = .025;
+			text.scale.x = .005;
+			text.scale.y = .005;
+			text.rotation.x = -0.1;
+			text.rotation.z = 1.52;
 
 
 			// debug
@@ -81,7 +84,7 @@ function World() {
 
 			var textScale = gui.addFolder('text-scale');
 			textScale.add(text.scale, 'x', -10, 10).listen();
-			textScale.add(text.scale, 'y', -10, 10).listen();
+			textScale.add(text.scale, 'y', 0.1, 0.2).listen();
 			textScale.add(text.scale, 'z', -10, 10).listen();
 
 			textPos.open();
