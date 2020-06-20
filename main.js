@@ -1,162 +1,202 @@
-var renderer, scene, camera, world;
+import * as THREE from './three.module.js';
 
-// Handle resizing the window so that the aspect ratio is maintained 
-window.onresize = function () {
-	camera.aspect = window.innerWidth / window.innerHeight;
-	camera.updateProjectionMatrix();
-	renderer.setSize(window.innerWidth, window.innerHeight);
-}
+import Stats from './libs/stats.module.js';
 
-function clamp(num, min, max){
-	return Math.min(Math.max(num, min), max);
-}
+import {
+    GUI
+} from './libs/dat.gui.module.js';
+import Water from './objects/Water.js';
+import Sky from './objects/Sky.js';
 
-function World() {
-	this.bgColors = [[10, 10, 55], [55, 33, 22], [99, 99, 255]];
-	this.obj = new THREE.Group();
-	this.dirLight;
+var container, stats;
+var camera, scene, renderer, light;
+var controls, water, sphere;
 
-	this.init = function() {
-		var citySize = 25.373428830842077;
+init();
+animate();
 
-		// Ground
-		var mat = new THREE.MeshLambertMaterial({color: 0xffffff, emissive: 0x000000});
-		var o = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), mat.clone());
-		o.rotation.x = -Math.PI/2;
-		o.receiveShadow = true;
-		o.castShadow = false;
-		this.obj.add(o);
+function init() {
 
-		var block = new THREE.Mesh(new THREE.BoxGeometry(.8, 1, .8), mat);
-		block.castShadow = false;
-		block.receiveShadow = true;
+    container = document.getElementById('container');
 
-		for(var x = 0; x < citySize; x++){
-			for(var z = 0; z < citySize; z++){
-				var newBlock = block.clone();
-				newBlock.position.set(x - citySize/2, 0, z - citySize/2);
-				newBlock.scale.y = 0.2703642304216465 * (citySize/((x - citySize/2)*(x - citySize/2) + (z - citySize/2)*(z - citySize/2)));
-				newBlock.scale.y = clamp(newBlock.scale.y, .1, 50);	
-				
-				this.obj.add(newBlock);
-			}
+    //
+
+    renderer = new THREE.WebGLRenderer();
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    container.appendChild(renderer.domElement);
+
+    //
+
+    scene = new THREE.Scene();
+
+    //
+
+    camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1, 20000);
+    camera.position.set(30, 30, 100);
+
+    //
+
+    light = new THREE.DirectionalLight(0xffffff, 0.8);
+    scene.add(light);
+
+    // Water
+
+    var waterGeometry = new THREE.PlaneBufferGeometry(10000, 10000);
+
+    water = new Water(
+        waterGeometry, {
+            textureWidth: 512,
+            textureHeight: 512,
+            waterNormals: new THREE.TextureLoader().load('textures/waternormals.jpg', function(texture) {
+
+                texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+
+            }),
+            alpha: 1.0,
+            sunDirection: light.position.clone().normalize(),
+            sunColor: 0xffffff,
+            waterColor: 0x001e0f,
+            distortionScale: 8,
+            fog: scene.fog !== undefined
         }
-        
-		scene.add(this.obj);
+    );
 
-		var loader = new THREE.FontLoader();
-		loader.load( "helvetiker_regular.typeface.json", function ( font ) {
-			var color = 0x006699;
-			var matLite = new THREE.MeshBasicMaterial( {
-				color: color,
-				transparent: true,
-				opacity: 0.4,
-				side: THREE.DoubleSide
-			} );
-			var message = "HELLO WORLD";
-			var shapes = font.generateShapes( message, 100 );
-			var geometry = new THREE.ShapeBufferGeometry( shapes );
-			geometry.computeBoundingBox();
-			xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
-			geometry.translate( xMid, 0, 0 );
-			text = new THREE.Mesh( geometry, matLite );
-			text.position.x = 4.2;
-			text.position.y = 7.2;
-			text.position.z = -5;
-			text.scale.x = .005;
-			text.scale.y = .005;
-			text.rotation.x = -0.1;
-			text.rotation.z = 1.52;
+    water.rotation.x = -Math.PI / 2;
 
+    scene.add(water);
 
-			// debug
-			var gui = new dat.GUI();
+    // Skybox
 
-			var textPos = gui.addFolder('text-pos');
-			textPos.add(text.position, 'x', -200, 200).listen();
-			textPos.add(text.position, 'y', -200, 200).listen();
-			textPos.add(text.position, 'z', -200, 200).listen();
+    var sky = new Sky();
 
-			var textRot = gui.addFolder('text-rot');
-			textRot.add(text.rotation, 'x', -200, 200).listen();
-			textRot.add(text.rotation, 'y', -200, 200).listen();
-			textRot.add(text.rotation, 'z', -200, 200).listen();
+    var uniforms = sky.material.uniforms;
 
-			var textScale = gui.addFolder('text-scale');
-			textScale.add(text.scale, 'x', -10, 10).listen();
-			textScale.add(text.scale, 'y', 0.1, 0.2).listen();
-			textScale.add(text.scale, 'z', -10, 10).listen();
+    uniforms['turbidity'].value = 10;
+    uniforms['rayleigh'].value = 2;
+    uniforms['luminance'].value = 1;
+    uniforms['mieCoefficient'].value = 0.005;
+    uniforms['mieDirectionalG'].value = 0.8;
 
-			textPos.open();
-			textRot.open();
-			textScale.open();
+    var parameters = {
+        distance: 400,
+        inclination: 0.0022,
+        azimuth: 0.4236
+    };
 
-			scene.add( text );
-		});
+    var cubeRenderTarget = new THREE.WebGLCubeRenderTarget(512, {
+        format: THREE.RGBFormat,
+        generateMipmaps: true,
+        minFilter: THREE.LinearMipmapLinearFilter
+    });
+    var cubeCamera = new THREE.CubeCamera(0.1, 1, cubeRenderTarget);
+
+    scene.background = cubeRenderTarget;
+
+    function updateSun() {
+
+        var theta = Math.PI * (parameters.inclination - 0.5);
+        var phi = 2 * Math.PI * (parameters.azimuth - 0.5);
+
+        light.position.x = parameters.distance * Math.cos(phi);
+        light.position.y = parameters.distance * Math.sin(phi) * Math.sin(theta);
+        light.position.z = parameters.distance * Math.sin(phi) * Math.cos(theta);
+
+        sky.material.uniforms['sunPosition'].value = light.position.copy(light.position);
+        water.material.uniforms['sunDirection'].value.copy(light.position).normalize();
+
+        cubeCamera.update(renderer, sky);
 
     }
-    
-	this.init();
+
+    updateSun();
+
+    //
+
+    var geometry = new THREE.IcosahedronBufferGeometry(20, 1);
+    var count = geometry.attributes.position.count;
+
+    var colors = [];
+    var color = new THREE.Color();
+
+    for (var i = 0; i < count; i += 3) {
+
+        color.setHex(Math.random() * 0xffffff);
+
+        colors.push(color.r, color.g, color.b);
+        colors.push(color.r, color.g, color.b);
+        colors.push(color.r, color.g, color.b);
+
+    }
+
+    geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
+    var material = new THREE.MeshStandardMaterial({
+        vertexColors: true,
+        roughness: 0.0,
+        flatShading: true,
+        envMap: cubeRenderTarget.texture,
+        side: THREE.DoubleSide
+    });
+
+    sphere = new THREE.Mesh(geometry, material);
+    scene.add(sphere);
+
+    //
+
+    stats = new Stats();
+    container.appendChild(stats.dom);
+
+    // GUI
+
+    var gui = new GUI();
+
+    var folder = gui.addFolder('Sky');
+    folder.add(parameters, 'inclination', 0, 0.5, 0.0001).onChange(updateSun);
+    folder.add(parameters, 'azimuth', 0, 1, 0.0001).onChange(updateSun);
+    folder.open();
+
+    var uniforms = water.material.uniforms;
+
+    var folder = gui.addFolder('Water');
+    folder.add(uniforms.distortionScale, 'value', 0, 8, 0.1).name('distortionScale');
+    folder.add(uniforms.size, 'value', 0.1, 10, 0.1).name('size');
+    folder.add(uniforms.alpha, 'value', 0.9, 1, .001).name('alpha');
+    folder.open();
+
+    //
+
+    window.addEventListener('resize', onWindowResize, false);
+
 }
 
-  
-// Set up three js scene
-window.onload = function(){
-	renderer = new THREE.WebGLRenderer({antialias: true});
-	renderer.shadowMapEnabled = true;
-	scene = new THREE.Scene();
-	camera = new THREE.PerspectiveCamera(
-		20, 
-		window.innerWidth / window.innerHeight, 
-		0.1, 
-		1000
-	);
-	renderer.setSize(window.innerWidth, window.innerHeight);
-	document.body.appendChild(renderer.domElement);
-	camera.position.x = 9;
-	camera.position.y = 15;
-	camera.position.z = 22.5;
-	camera.rotation.x = 56.15;
-	camera.rotation.y = -6.025;
-	camera.rotation.z = 20.5;
+function onWindowResize() {
 
-	scene.add(new THREE.AmbientLight(0x000000));
-	var dirLight = new THREE.DirectionalLight( 0xffffff, 2, 5000);
-	dirLight.position.set(-50, 25, 0);
-	dirLight.shadow.mapSize.width = 4096;
-	dirLight.shadow.mapSize.height = 4096;
-	dirLight.castShadow = true;
-	
-	scene.add(dirLight);
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
 
-	var dlSub = new THREE.DirectionalLight(0xffffff, .5, 500);
-	dlSub.position.set(-5, -5, -5);
-	scene.add(dlSub);
+    renderer.setSize(window.innerWidth, window.innerHeight);
 
-	scene.rotation.y = Math.PI/4;
-
-	scene.background = new THREE.Color(0xffffff);
-
-    world = new World();
-    
-    /* debug
-    var gui = new dat.GUI();
-
-    var cam = gui.addFolder('position');
-    cam.add(camera.position, 'x', -500, 500).listen();
-    cam.add(camera.position, 'y', -500, 500).listen();
-    cam.add(camera.position, 'z', -500, 500).listen();
-    var rot = gui.addFolder('rotation');
-    rot.add(camera.rotation, 'x', -500, 500).listen();
-    rot.add(camera.rotation, 'y', -500, 500).listen();
-    rot.add(camera.rotation, 'z', -500, 500).listen();
-    cam.open();
-    cam.open(); */
-
-	render();
 }
 
-var render = function (){
-	requestAnimationFrame(render);
-	renderer.render(scene, camera);
+function animate() {
+
+    requestAnimationFrame(animate);
+    render();
+    stats.update();
+
+}
+
+function render() {
+
+    var time = performance.now() * 0.001;
+
+    sphere.position.y = Math.sin(time) * 20 + 5;
+    sphere.rotation.x = time * 0.5;
+    sphere.rotation.z = time * 0.51;
+
+    water.material.uniforms['time'].value += 1.0 / 60.0;
+
+    renderer.render(scene, camera);
+
 }
