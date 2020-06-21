@@ -252,6 +252,20 @@ $("#bigscreener").bind("mouseleave", function() {
     
     })();
     
+    function toDataUrl(url, callback) {
+      var xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+          var reader = new FileReader();
+          reader.onloadend = function() {
+              callback(reader.result);
+          }
+          reader.readAsDataURL(xhr.response);
+      };
+      xhr.open('GET', url);
+      xhr.responseType = 'blob';
+      xhr.send();
+    }
+
 function setBackground(background) {
     if (!background) return;
 
@@ -260,6 +274,33 @@ function setBackground(background) {
         _h: window.innerHeight,
         img: background
     });
+
+    toDataUrl(background, function(myBase64) {
+      console.log(myBase64);
+    });  
 }
+
+var $img = $("#img");
+var data = $img.attr("src");
+var maxErrors = 100;
+var margin = 2200;
+
+console.log(data);
+
+function update() {
+  var corrupted = data;
+  if (Math.random() > 0.7) {
+    var errors = Math.round(Math.random() * maxErrors)
+    for (var i = 0; i < errors; i++) {
+      var p = margin + Math.round(Math.random() * (corrupted.length - margin - 1));
+      corrupted = corrupted.substr(0, p) + corrupted.charAt(p + 1) + corrupted.charAt(p) + corrupted.substr(p + 2);
+    }
+  }
+
+  $img.attr("src", corrupted);
+}
+
+update();
+setInterval(update, 26);
 
 Splitting();
