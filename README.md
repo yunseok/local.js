@@ -1,4 +1,3 @@
-todos: 
-- gif background image glitch 
-- more noise
+todos:
+
 - performance & clean code
