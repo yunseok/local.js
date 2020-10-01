@@ -1,3 +1,0 @@
-todos:
-
-- performance & clean code
