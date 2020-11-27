@@ -1,0 +1,147 @@
+@media (prefers-color-scheme: dark) {
+	body {
+		background: #222222;
+		color: #eeeeee;
+	}
+	a,
+	a:visited,
+	a:hover {
+		color: #eeeeee;
+	}
+	.project-card {
+		background: #2c2c2a;
+	}
+	.project-card--header span,
+	.project-card--header i {
+		color: #656565;
+	}
+	.project-card--title p {
+		color: #9e9e9e;
+	}
+}
+
+@media (prefers-color-scheme: light) {
+	body {
+		background: #eeeef2;
+		color: #222222;
+	}
+	a,
+	a:visited,
+	a:hover {
+		color: #222222;
+	}
+	.project-card {
+		background: #ffffff;
+	}
+	.project-card--header span,
+	.project-card--header a {
+		color: #c0c0c0;
+	}
+	.project-card--title p {
+		color: #c2c2c2;
+	}
+}
+
+body {
+	margin: 0 auto;
+}
+
+a,
+a:visited,
+a:hover {
+	text-decoration: none;
+}
+
+.container {
+	display: flex;
+}
+
+.left {
+	width: 35%;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	padding: 0 32px;
+}
+
+.main {
+	height: 10%;
+	display: flex;
+	flex-direction: column;
+}
+
+.main h2 {
+	font-family: 'Assistant', sans-serif;
+	font-weight: 800;
+	font-size: 42px;
+	margin: 0 0 18px;
+}
+
+.main p {
+	font-family: 'Assistant', sans-serif;
+	font-weight: 600;
+	font-size: 16px;
+	margin: 0;
+}
+
+.footer {
+	display: flex;
+	justify-content: space-between;
+	font-size: 24px;
+}
+
+.links {
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.right {
+	width: 65%;
+	height: 100vh;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+.project-card {
+	margin: 16px 24px;
+	border-radius: 12px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	height: 12%;
+	padding: 16px 32px;
+	opacity: .5;
+	transition: .2s ease-in;
+}
+
+.project-card:hover {
+	opacity: 1;
+	cursor: pointer;
+	margin: 6px 12px;
+	transition: .2s ease-in;
+}
+
+.project-card--title {
+	font-family: 'Assistant', sans-serif;
+}
+
+.project-card--title h2 {
+	font-size: 32px;
+	margin: 0;
+}
+
+.project-card--title p {
+	font-size: 18px;
+	margin: 0;
+}
+
+.project-card--header {
+	display: flex;
+	justify-content: space-between;
+}
+
+.project-card--header span {
+	font-family: 'Roboto Mono', monospace;
+	font-size: 14px;
+}

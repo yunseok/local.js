@@ -1,131 +1,172 @@
+<!-- What are you doing? Please, don't be noisy... -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width,initial-scale=1.0, user-scalable=no"
-    />
-    <title>ALAN S</title>
-    <meta name="description" content="Web Developer from Paris, France" />
-    <meta property="og:title" content="ALAN S" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://yunseok.dev" />
-    <meta
-      property="og:description"
-      content="Web Developer from Paris, France"
-    />
-    <link rel="stylesheet" href="./assets/css/index.css" />
-  </head>
-  <body>
-    <div class="scanlines"></div>
-    <div class="noise"></div>
-    <div class="noise noise-moving"></div>
 
-    <div id="img"></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/429e3a6f02.js" crossorigin="anonymous"></script>
+</head>
 
-    <section class="contact">
-      <div class="center">
-        <p>
-          E-MAIL<br /><a style="color: white" href="mailto:tr08td3@protonmail.ch"
-            >TR08TD3@PROTONMAIL.CH</a
-          >
-        </p>
-        <p>
-          GITHUB<br /><a style="color: white" href="https://github.com/yunseok"
-            >GITHUB.COM/YUNSEOK</a
-          >
-        </p>
-        <p>AVAILABILITY:<br /><span style="color: #00ff00">AVAILAIBLE</span></p>
-        <p>&copy; 2020 alan-web.dev</p>
-      </div>
-    </section>
-
-    <section class="about" style="padding-bottom: 50px">
-      <div class="center">
-        <p>LOREM IPSUM!</p>
-      </div>
-    </section>
-
-    <table cellpadding="0" cellspacing="0" class="a">
-      <tbody cellpadding="0" cellspacing="0">
-        <tr class="b">
-          <td class="title glitch" data-text="YUNSEOK">ALAN S</td>
-        </tr>
-        <tr class="o">
-          <td class="works">WORKS</td>
-          <td>
-            <ul>
-              <li class="works-item" id="halza">
-                <a href="https://www.halza.com/">halza</a>
-              </li>
-              <li class="works-item" id="chantelivre">
-                <a href="http://www.chantelivre.com/">chantelivre</a>
-              </li>
-              <li class="works-item" id="harpy">
-                <a href="https://harpy.gg/">harpy.gg</a>
-              </li>
-              <li class="works-item" id="wikipedia">
-                <a href="https://www.wikimedia.fr/">wikipédia france</a>
-              </li>
-              <li class="works-item" id="roche">
-                <a href="https://roche.fr/">roche</a>
-              </li>
-              <li class="works-item" id="plastic-scandal">
-                <a href="https://plasticscandal.xyz/">plastic scandal</a>
-              </li>
-              <li class="works-item" id="be">
-                <a href="https://agence-belle-epoque.fr/"
-                  >agence belle époque</a
-                >
-              </li>
-              <li class="works-item" id="radio-soulwax">
-                <a href="https://github.com/yunseok/radio-soulwax"
-                  >radio soulwax</a
-                >
-              </li>
-              <li class="works-item" id="rc">
-                <a href="https://www.relaischateaux.com/"></a>relais & châteaux
-              </li>
-              <li class="works-item" id="bigscreener">
-                <a href="https://github.com/yunseok/bigscreener">bigscreener</a>
-              </li>
-              <li class="works-item" id="hwidbypass">
-                <a href="https://github.com/yunseok/HWIDbypass"
-                  >HWID Bypass Tool</a
-                >
-              </li>
-              <li class="works-item" id="steamBooster">
-                <a href="https://github.com/yunseok/steam-booster"
-                  >steam booster</a
-                >
-              </li>
-            </ul>
-          </td>
-        </tr>
-        <!-- <tr class="o">
-          <td class="works about">ABOUT</td>
-        </tr> -->
-        <tr class="o">
-          <td class="works contact">CONTACT</td>
-          <td>
-            <ul></ul>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="screen-bottom">
-      <div class="line">
-        <div class="red"></div>
-        <div class="white"></div>
-        <div class="green"></div>
-      </div>
+<body>
+    <div class="container">
+        <div class="left">
+            <div class="main">
+                <h2><span id="randomLang"></span> Alan.</h2>
+                <p>JavaScript and CSS nerd. I mostly focus on front-end development but enjoy back-end development as
+                    well. Passionate developer since my teenage years, it all started when I was modding diverse video
+                    games. Discovered web development years later and love it! Do not hesitate to contact me for any
+                    inquiries. :)
+                </p>
+            </div>
+            <div class="footer">
+                <a href="https://github.com/yunseok/"><i class="fa fa-github" aria-hidden="true"></i></a>
+                <a href="mailto:tr08td3@protonmail.ch" title="tr08td3@protonmail.ch"><i class="fa fa-envelope-o"
+                        aria-hidden="true"></i></a>
+            </div>
+        </div>
+        <div class="right">
+            <div class="project-card" onclick="location.href = 'https://www.halza.com/'">
+                <div class="project-card--header">
+                    <span>JAVASCRIPT | REACT</span>
+                    <i class="fa fa-external-link" aria-hidden="true"></i>
+                </div>
+                <div class="project-card--title">
+                    <h2>Halza</h2>
+                    <p>Development of a medical mobile app.</p>
+                </div>
+            </div>
+            <div class="project-card" onclick="location.href = 'https://www.chantelivre.com/'">
+                <div class="project-card--header">
+                    <span>PHP | WORDPRESS</span>
+                    <i class="fa fa-external-link" aria-hidden="true"></i>
+                </div>
+                <div class="project-card--title">
+                    <h2>Chantelivre</h2>
+                    <p>Website development using WordPress.</p>
+                </div>
+            </div>
+            <div class="project-card" onclick="location.href = 'https://harpy.gg/'">
+                <div class="project-card--header">
+                    <span>TYPESCRIPT | NODE.JS | ANGULAR</span>
+                    <i class="fa fa-external-link" aria-hidden="true"></i>
+                </div>
+                <div class="project-card--title">
+                    <h2>Harpy.gg</h2>
+                    <p>Full-Stack development of a TTRPG tool.</p>
+                </div>
+            </div>
+            <div class="project-card" onclick="location.href = 'https://harpy.gg/'">
+                <div class="project-card--header">
+                    <span>TYPESCRIPT | NODE.JS | ANGULAR</span>
+                    <i class="fa fa-external-link" aria-hidden="true"></i>
+                </div>
+                <div class="project-card--title">
+                    <h2>Harpy.gg</h2>
+                    <p>Full-Stack development of a TTRPG tool.</p>
+                </div>
+            </div>
+            <div class="project-card" onclick="location.href = 'https://www.wikipedia.fr/'">
+                <div class="project-card--header">
+                    <span>PHP | WORDPRESS</span>
+                    <i class="fa fa-external-link" aria-hidden="true"></i>
+                </div>
+                <div class="project-card--title">
+                    <h2>Wikipédia France</h2>
+                    <p>New re-design and code for the Wikipédia France website.</p>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-card--header">
+                    <span>JAVASCRIPT | REACT</span>
+                    <span>Work</span>
+                </div>
+                <div class="project-card--title">
+                    <h2>Roche</h2>
+                    <p>Classified app for Roche.</p>
+                </div>
+            </div>
+            <div class="project-card" onclick="location.href = 'https://plasticscandal.xyz/'">
+                <div class="project-card--header">
+                    <span>SCSS</span>
+                    <i class="fa fa-external-link" aria-hidden="true"></i>
+                </div>
+                <div class="project-card--title">
+                    <h2>Plastic Scandal</h2>
+                    <p>Web design and development for a local band. Code on GitHub.</p>
+                </div>
+            </div>
+            <div class="project-card" onclick="location.href = 'https://agence-belle-epoque.fr/'">
+                <div class="project-card--header">
+                    <span>JAVASCRIPT | PHP</span>
+                    <i class="fa fa-external-link" aria-hidden="true"></i>
+                </div>
+                <div class="project-card--title">
+                    <h2>Agence Belle Époque</h2>
+                    <p>Web design and development for many clients.</p>
+                </div>
+            </div>
+            <div class="project-card" onclick="location.href = 'https://github.com/yunseok/radio-soulwax'">
+                <div class="project-card--header">
+                    <span>TYPESCRIPT | ANGULAR (ARCHIVED)</span>
+                    <i class="fa fa-external-link" aria-hidden="true"></i>
+                </div>
+                <div class="project-card--title">
+                    <h2>Radio Soulwax</h2>
+                    <p>Radio app for Radio Soulwax.</p>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-card--header">
+                    <span>TYPESCRIPT | ANGULAR</span>
+                    <span>Freelance</span>
+                </div>
+                <div class="project-card--title">
+                    <h2>Relais & Châteaux</h2>
+                    <p>Internal app to manage different partners.</p>
+                </div>
+            </div>
+            <div class="project-card" onclick="location.href = 'https://github.com/yunseok/HWIDBypass'">
+                <div class="project-card--header">
+                    <span>JAVASCRIPT | REACT.JS (ARCHIVED)</span>
+                    <i class="fa fa-external-link" aria-hidden="true"></i>
+                </div>
+                <div class="project-card--title">
+                    <h2>BigScreener</h2>
+                    <p>An open-source streaming service using torrents. Focusing heavily on privacy.
+                    </p>
+                </div>
+            </div>
+            <div class="project-card" onclick="location.href = 'https://github.com/yunseok/HWIDBypass'">
+                <div class="project-card--header">
+                    <span>C# (ARCHIVED)</span>
+                    <i class="fa fa-external-link" aria-hidden="true"></i>
+                </div>
+                <div class="project-card--title">
+                    <h2>HWID Bypass Tool</h2>
+                    <p>Using this tool to bypass HWID check for bans, for games using Easy Anti-Cheat.
+                    </p>
+                </div>
+            </div>
+            <div class="project-card" onclick="location.href = 'https://github.com/yunseok/steam-booster'">
+                <div class="project-card--header">
+                    <span>JAVASCRIPT | NODE.JS</span>
+                    <i class="fa fa-external-link" aria-hidden="true"></i>
+                </div>
+                <div class="project-card--title">
+                    <h2>Steam Booster</h2>
+                    <p>An open-source Steam hour booster.</p>
+                </div>
+            </div>
+        </div>
     </div>
+    <script src="main.js"></script>
+</body>
 
-    <script src="assets/js/jquery.js"></script>
-    <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
-    <script src="assets/js/noise.js"></script>
-    <script src="assets/js/scripts.js"></script>
-  </body>
 </html>
