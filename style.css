@@ -3,22 +3,18 @@
 		background: #222222;
 		color: #eeeeee;
 	}
-
 	a,
 	a:visited,
 	a:hover {
 		color: #eeeeee;
 	}
-
 	.project-card {
 		background: #2c2c2a;
 	}
-
-	.project-card--header span, 
+	.project-card--header span,
 	.project-card--header i {
 		color: #656565;
 	}
-
 	.project-card--title p {
 		color: #9e9e9e;
 	}
@@ -29,22 +25,18 @@
 		background: #eeeef2;
 		color: #222222;
 	}
-
 	a,
 	a:visited,
 	a:hover {
 		color: #222222;
 	}
-
 	.project-card {
 		background: #ffffff;
 	}
-
-	.project-card--header span, 
+	.project-card--header span,
 	.project-card--header a {
 		color: #c0c0c0;
 	}
-
 	.project-card--title p {
 		color: #c2c2c2;
 	}
@@ -146,7 +138,7 @@ a:hover {
 
 .project-card--header {
 	display: flex;
-    justify-content: space-between;
+	justify-content: space-between;
 }
 
 .project-card--header span {
