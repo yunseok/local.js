@@ -9,3 +9,4 @@ Simple portfolio. https://alan-web.dev/
 - [x] Dark mode
 - [x] Responsive
 - [ ] Mobile friendly website
+- [ ] Fix responsive issues
