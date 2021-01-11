@@ -91,6 +91,10 @@ a:hover {
 	font-size: 24px;
 }
 
+#randomLang {
+	white-space: nowrap;
+}
+
 .links {
 	margin-top: auto;
 	margin-bottom: auto;
