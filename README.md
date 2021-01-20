@@ -8,5 +8,5 @@ Simple portfolio. https://alan-web.dev/
 - [x] HTML and CSS structure
 - [x] Dark mode
 - [x] Responsive
-- [ ] Mobile friendly website
-- [ ] Fix responsive issues
+- [x] Mobile friendly website
+- [x] Fix responsive issues
